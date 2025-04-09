@@ -9,7 +9,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "productos")
+@Table(name = "productos", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "codigo")
+})
 @Getter
 @Setter
 public class Producto {
@@ -17,6 +19,11 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "El código no puede estar vacío")
+    @Size(min = 3, max = 20, message = "El código debe tener entre 3 y 20 caracteres")
+    @Column(nullable = false, unique = true)
+    private String codigo;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres")
