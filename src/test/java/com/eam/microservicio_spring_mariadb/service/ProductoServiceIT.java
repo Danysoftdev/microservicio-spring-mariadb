@@ -134,7 +134,7 @@ class ProductoServiceIT {
             productoService.actualizarProducto("A002", conCodigoCambiado);
         });
 
-        assertEquals("No se puede modificar el código del producto", ex.getMessage());
+        assertEquals("No se permite modificar el código del producto", ex.getMessage());
     }
 
     @Test
