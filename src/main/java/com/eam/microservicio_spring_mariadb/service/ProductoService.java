@@ -6,6 +6,8 @@ import com.eam.microservicio_spring_mariadb.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 import java.util.NoSuchElementException;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +67,7 @@ public class ProductoService {
     }
 
     // Eliminar producto por código
+    @Transactional
     public void eliminarProducto(String codigo) {
         Producto producto = productoRepository.findByCodigo(codigo)
             .orElseThrow(() -> new NoSuchElementException("No se encontró el producto con el código proporcionado"));
