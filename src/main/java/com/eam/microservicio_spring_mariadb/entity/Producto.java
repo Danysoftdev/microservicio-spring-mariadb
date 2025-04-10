@@ -39,4 +39,25 @@ public class Producto {
     @Positive(message = "La cantidad debe ser mayor que cero")
     @Column(nullable = false)
     private Integer cantidad;
+
+    // 🔽 Constructor vacío (ya lo agrega Lombok, pero puedes incluirlo explícitamente si quieres)
+    public Producto() {
+    }
+
+    // 🔽 Constructor con todos los campos (sin el ID, que es autogenerado)
+    public Producto(String codigo, String nombre, Double precio, Integer cantidad) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = cantidad;
+    }
+
+    // 🔽 Si necesitas también uno con ID (opcional para tests)
+    public Producto(Long id, String codigo, String nombre, Double precio, Integer cantidad) {
+        this.id = id;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = cantidad;
+    }
 }
