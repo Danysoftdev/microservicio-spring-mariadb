@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -21,7 +20,12 @@ public class ProductoController {
     public ResponseEntity<?> crearProducto(@Valid @RequestBody Producto producto) {
         try {
             Producto productoCreado = productoService.crearProducto(producto);
-            return ResponseEntity.ok(productoCreado);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", "Producto creado exitosamente.");
+            response.put("producto", productoCreado);
+
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -31,7 +35,12 @@ public class ProductoController {
     public ResponseEntity<?> listarProductos() {
         try {
             List<Producto> productos = productoService.listarProductos();
-            return ResponseEntity.ok(productos);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", "Lista de productos obtenida correctamente.");
+            response.put("productos", productos);
+
+            return ResponseEntity.ok(response);
         } catch (IllegalStateException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
@@ -41,7 +50,12 @@ public class ProductoController {
     public ResponseEntity<?> obtenerProducto(@PathVariable String codigo) {
         try {
             Producto producto = productoService.obtenerPorCodigo(codigo);
-            return ResponseEntity.ok(producto);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", "Producto obtenido exitosamente.");
+            response.put("producto", producto);
+
+            return ResponseEntity.ok(response);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
@@ -51,7 +65,12 @@ public class ProductoController {
     public ResponseEntity<?> actualizarProducto(@PathVariable String codigo, @Valid @RequestBody Producto producto) {
         try {
             Producto productoActualizado = productoService.actualizarProducto(codigo, producto);
-            return ResponseEntity.ok(productoActualizado);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", "Producto actualizado exitosamente.");
+            response.put("producto", productoActualizado);
+
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (NoSuchElementException e) {
@@ -63,7 +82,12 @@ public class ProductoController {
     public ResponseEntity<?> eliminarProducto(@PathVariable String codigo) {
         try {
             productoService.eliminarProducto(codigo);
-            return ResponseEntity.ok("Producto eliminado exitosamente.");
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", "Producto eliminado exitosamente.");
+            response.put("codigo", codigo);
+
+            return ResponseEntity.ok(response);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
